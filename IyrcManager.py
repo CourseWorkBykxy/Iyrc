@@ -93,7 +93,7 @@ class IyrcManager:
 
     def updateBlog(self, ui):
         self.db.open()
-        self.db.updateBlog(ui.blogtitle.get(), ui.blogtext.get(1.0,END), self.blogid)
+        self.db.updateBlog(ui.blogtitle.get(), ui.blogtext.get(1.0, END), self.blogid)
         self.db.close()
         ui.message.delete(0, END)
         ui.message.insert(END, '修改成功')
@@ -106,6 +106,7 @@ class IyrcManager:
         ui.message.delete(0, END)
         ui.message.insert(END, '删除成功')
         self.selectMyBlog(ui)
+
     def selectMyBlog(self, ui):
         ui.toMyBlog()
         self.db.open()
@@ -121,13 +122,12 @@ class IyrcManager:
 
     def insertBlog(self, ui):
         self.db.open()
-        self.db.insertBlog(ui.blogtitle.get(), self.user.userName, ui.blogtext.get(1.0,END))
+        self.db.insertBlog(ui.blogtitle.get(), self.user.userName, ui.blogtext.get(1.0, END))
         self.db.close()
         ui.message.delete(0, END)
         ui.message.insert(END, '创建博客成功')
         self.selectMyBlog(ui)
 
-    # TODO 下方需要修改
     def showUserInfo(self, ui):
         # 输入正确性验证
         ui.username.delete(0, END)
@@ -140,105 +140,24 @@ class IyrcManager:
         ui.message.insert(END, '修改后请点击按钮')
 
     def updateUserInfo(self, ui):
-        # 输入正确性验证
-        self.user.userName = ui.username.get()
-        self.user.email = ui.email.get()
-        self.user.type = ui.type.get()
-
-        ui.username.delete(0, END)
-        ui.username.insert(END, self.user.userName)
-        ui.email.delete(0, END)
-        ui.email.insert(END, self.user.email)
-        ui.type.delete(0, END)
-        ui.type.insert(END, self.user.type)
+        self.db.open()
+        self.db.updateUser(ui.username.get(),ui.password.get(),ui.email.get(),self.user.userID)
+        self.db.close()
         ui.message.delete(0, END)
         ui.message.insert(END, '修改完成')
 
     # TODO 下方需要修改
-    def showBookInfo(self, ui):
-        # 输入正确性验证
-        ui.username.delete(0, END)
-        ui.username.insert(END, self.user.userName)
-        ui.email.delete(0, END)
-        ui.email.insert(END, self.user.email)
-        ui.type.delete(0, END)
-        ui.type.insert(END, self.user.type)
-        ui.message.delete(0, END)
-        ui.message.insert(END, '修改后请点击按钮')
+    def showBook(self, ui):
+        pass
 
-    def insertBookInfo(self, ui):
-        # 输入正确性验证
-        ui.username.delete(0, END)
-        ui.username.insert(END, self.user.userName)
-        ui.email.delete(0, END)
-        ui.email.insert(END, self.user.email)
-        ui.type.delete(0, END)
-        ui.type.insert(END, self.user.type)
-        ui.message.delete(0, END)
-        ui.message.insert(END, '修改后请点击按钮')
+    def selectBook(self, ui):
+        pass
 
-    def updateBookInfo(self, ui):
-        # 输入正确性验证
-        ui.username.delete(0, END)
-        ui.username.insert(END, self.user.userName)
-        ui.email.delete(0, END)
-        ui.email.insert(END, self.user.email)
-        ui.type.delete(0, END)
-        ui.type.insert(END, self.user.type)
-        ui.message.delete(0, END)
-        ui.message.insert(END, '修改后请点击按钮')
+    def insertBook(self, ui):
+        pass
 
-    def deleteBookInfo(self, ui):
-        # 输入正确性验证
-        ui.username.delete(0, END)
-        ui.username.insert(END, self.user.userName)
-        ui.email.delete(0, END)
-        ui.email.insert(END, self.user.email)
-        ui.type.delete(0, END)
-        ui.type.insert(END, self.user.type)
-        ui.message.delete(0, END)
-        ui.message.insert(END, '修改后请点击按钮')
+    def updateBook(self, ui):
+        pass
 
-    def showBlogInfo(self, ui):
-        # 输入正确性验证
-        ui.username.delete(0, END)
-        ui.username.insert(END, self.user.userName)
-        ui.email.delete(0, END)
-        ui.email.insert(END, self.user.email)
-        ui.type.delete(0, END)
-        ui.type.insert(END, self.user.type)
-        ui.message.delete(0, END)
-        ui.message.insert(END, '修改后请点击按钮')
-
-    def insertBlogInfo(self, ui):
-        # 输入正确性验证
-        ui.username.delete(0, END)
-        ui.username.insert(END, self.user.userName)
-        ui.email.delete(0, END)
-        ui.email.insert(END, self.user.email)
-        ui.type.delete(0, END)
-        ui.type.insert(END, self.user.type)
-        ui.message.delete(0, END)
-        ui.message.insert(END, '修改后请点击按钮')
-
-    def updateBlogInfo(self, ui):
-        # 输入正确性验证
-        ui.username.delete(0, END)
-        ui.username.insert(END, self.user.userName)
-        ui.email.delete(0, END)
-        ui.email.insert(END, self.user.email)
-        ui.type.delete(0, END)
-        ui.type.insert(END, self.user.type)
-        ui.message.delete(0, END)
-        ui.message.insert(END, '修改后请点击按钮')
-
-    def deleteBlogInfo(self, ui):
-        # 输入正确性验证
-        ui.username.delete(0, END)
-        ui.username.insert(END, self.user.userName)
-        ui.email.delete(0, END)
-        ui.email.insert(END, self.user.email)
-        ui.type.delete(0, END)
-        ui.type.insert(END, self.user.type)
-        ui.message.delete(0, END)
-        ui.message.insert(END, '修改后请点击按钮')
+    def deleteBook(self, ui):
+        pass

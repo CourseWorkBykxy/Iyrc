@@ -128,6 +128,10 @@ class IyrcDB:
         sql = 'insert into USER(ID,USERNAME,PASSWORD,EMAIL,TYPE) values(?,?,?,?,?)'
         self.runSQL(sql, (self.getID('USER'), username, password, email, type,))
 
+    def updateUser(self, username, password, email, id):
+        sql = 'update USER set USERNAME=?,PASSWORD=?,EMAIL=? where ID=?'
+        self.runSQL(sql, (username, password, email, id,))
+
     def insertBlog(self, title, author, text):
         sql = 'insert into BLOG(ID,TITLE,AUTHOR,CREATE_TIME,CHANGE_TIME,TEXT) values(?,?,?,?,?,?)'
         self.runSQL(sql, (self.getID('BLOG'), title, author,
