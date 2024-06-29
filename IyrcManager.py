@@ -143,8 +143,11 @@ class IyrcManager:
 
     def updateUserInfo(self, ui):
         self.db.open()
-        self.db.updateUser(ui.username.get(),ui.password.get(),ui.email.get(),self.user.userID)
+        self.db.updateUser(ui.username.get(), ui.password.get(), ui.email.get(), self.user.userID)
         self.db.close()
+        self.user.userName = ui.username.get()
+        self.user.userPassword = ui.password.get()
+        self.user.email = ui.email.get()
         ui.message.delete(0, END)
         ui.message.insert(END, '修改完成')
 
@@ -170,7 +173,7 @@ class IyrcManager:
 
     def insertMyBook(self, ui):
         self.db.open()
-        self.db.insertMyBook(self.user.userID,ui.bookID.get())
+        self.db.insertMyBook(self.user.userID, ui.bookID.get())
         self.db.close()
         ui.message.delete(0, END)
         ui.message.insert(END, '添加成功')
