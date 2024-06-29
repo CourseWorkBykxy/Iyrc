@@ -82,14 +82,17 @@ class IyrcUI():
         Button(self.f1, text='修改个人信息', command=lambda: m.updateUserInfo(self)).grid(row=1, column=2, pady=5)
         Label(self.f1, text='个人信息').grid(row=2, column=0, padx=5)
         Label(self.f1, text='用户名:').grid(row=3, column=0, padx=5)
-        Label(self.f1, text='邮箱:').grid(row=4, column=0, padx=5)
-        Label(self.f1, text='用户类型:').grid(row=5, column=0, padx=5)
+        Label(self.f1, text='密码:').grid(row=4, column=0, padx=5)
+        Label(self.f1, text='邮箱:').grid(row=5, column=0, padx=5)
+        Label(self.f1, text='用户类型:').grid(row=6, column=0, padx=5)
         self.username = Entry(self.f1, textvariable=StringVar())
+        self.password = Entry(self.f1, textvariable=StringVar())
         self.email = Entry(self.f1, textvariable=StringVar())
         self.type = Entry(self.f1, textvariable=StringVar())
         self.username.grid(row=3, column=1, padx=5)
-        self.email.grid(row=4, column=1, padx=5)
-        self.type.grid(row=5, column=1, padx=5)
+        self.password.grid(row=4, column=1, padx=5)
+        self.email.grid(row=5, column=1, padx=5)
+        self.type.grid(row=6, column=1, padx=5)
 
     def blogManage(self):
         cleanFrame(self.f1)
@@ -182,7 +185,46 @@ class IyrcUI():
         cleanFrame(self.f2)
         Label(self.f1, text='当前菜单:书籍信息管理').grid(row=0, column=0, padx=5)
         Label(self.f1, text='功能选择:').grid(row=1, column=0, padx=5)
-        Button(self.f1, text='查看书架信息', command=lambda: m.login(self)).grid(row=1, column=1, pady=5)
+        Button(self.f1, text='查看书籍信息', command=self.toScanBook).grid(row=1, column=1, pady=5)
+        Button(self.f1, text='查看书架信息', command=lambda: m.selectMyBook(self)).grid(row=1, column=2, pady=5)
+        Label(self.f1, text='书籍ID:').grid(row=2, column=0, padx=5)
+        self.bookID = Entry(self.f1, textvariable=StringVar())
+        self.bookID.grid(row=2, column=1, padx=5)
+        Button(self.f1, text='添加书籍', command=lambda: m.insertMyBook(self)).grid(row=2, column=2, pady=5)
+        Button(self.f1, text='删除书籍', command=lambda: m.deleteMyBook(self)).grid(row=2, column=3, pady=5)
+
+    def toMyBook(self):
+        cleanFrame(self.f2)
+        # 创建表格对象
+        self.tree = ttk.Treeview(self.f2)
+        # 定义列
+        self.tree["columns"] = ("书名", "作者")
+        self.tree.column("书名", width=200)
+        self.tree.column("作者", width=100)
+        # 设置显示的表头名
+        self.tree.heading("书名", text="书名")
+        self.tree.heading("作者", text="作者")
+
+
+    def toScanBook(self):
+        cleanFrame(self.f2)
+        # 创建表格对象
+        self.tree = ttk.Treeview(self.f2)
+        # 定义列
+        # 定义列
+        self.tree["columns"] = ("书名", "作者")
+        self.tree.column("书名", width=200)
+        self.tree.column("作者", width=100)
+        # 设置显示的表头名
+        self.tree.heading("书名", text="书名")
+        self.tree.heading("作者", text="作者")
+        m.db.open()
+        cursor = m.db.selectAllBook()
+        for i in cursor:
+            self.tree.insert("", i[0], text=str(i[0]), values=(i[1], i[2]))
+        m.db.close()
+        self.tree.pack()
+
 
     def login(self):
         cleanFrame(self.frame)

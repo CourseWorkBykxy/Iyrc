@@ -132,6 +132,8 @@ class IyrcManager:
         # 输入正确性验证
         ui.username.delete(0, END)
         ui.username.insert(END, self.user.userName)
+        ui.password.delete(0, END)
+        ui.password.insert(END, self.user.password)
         ui.email.delete(0, END)
         ui.email.insert(END, self.user.email)
         ui.type.delete(0, END)
@@ -146,9 +148,19 @@ class IyrcManager:
         ui.message.delete(0, END)
         ui.message.insert(END, '修改完成')
 
-    # TODO 下方需要修改
-    def showBook(self, ui):
-        pass
+    def selectMyBook(self, ui):
+        ui.toMyBook()
+        self.db.open()
+        r = self.db.selectMyBook(self.user.userID)
+        if r is not None:
+            for i in r:
+                j = self.db.selectBook(int(i[1]))
+                ui.tree.insert("", str(j[0]), text=str(j[0]), values=(j[1], j[2]))
+            ui.tree.pack()
+        else:
+            ui.message.delete(0, END)
+            ui.message.insert(END, '没有书籍')
+        self.db.close()
 
     def selectBook(self, ui):
         pass
@@ -156,8 +168,24 @@ class IyrcManager:
     def insertBook(self, ui):
         pass
 
+    def insertMyBook(self, ui):
+        self.db.open()
+        self.db.insertMyBook(self.user.userID,ui.bookID.get())
+        self.db.close()
+        ui.message.delete(0, END)
+        ui.message.insert(END, '添加成功')
+        self.selectMyBook(ui)
+
     def updateBook(self, ui):
         pass
 
     def deleteBook(self, ui):
         pass
+
+    def deleteMyBook(self, ui):
+        self.db.open()
+        self.db.deleteMyBook(self.user.userID, ui.bookID.get())
+        self.db.close()
+        ui.message.delete(0, END)
+        ui.message.insert(END, '删除成功')
+        self.selectMyBook(ui)

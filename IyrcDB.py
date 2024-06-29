@@ -29,6 +29,9 @@ class IyrcDB:
                        CREATE_TIME     INT     NOT NULL,
                        CHANGE_TIME     INT     NOT NULL,
                        TEXT            TEXT);''')
+        cursor.execute('''CREATE TABLE IF NOT EXISTS USERBOOK
+                               (USERID TEXT     NOT NULL,
+                               BOOKID  TEXT    NOT NULL);''')
         self.conn.commit()
         self.conn.close()
 
@@ -157,6 +160,39 @@ class IyrcDB:
 
     def selectMyBlog(self, id):
         sql = 'select * from BLOG where AUTHOR=?'
+        return self.runSQL(sql, (id,))
+
+    def insertMyBook(self, userid, bookid):
+        sql = 'insert into USERBOOK(USERID,BOOKID) values(?,?)'
+        self.runSQL(sql, (userid, bookid,))
+
+    def insertBook(self, title, author, text):
+        sql = 'insert into BOOK(ID,NAME,AUTHOR,TEXT) values(?,?,?,?)'
+        self.runSQL(sql, (self.getID('BOOK'), title, author, text,))
+
+    def updateBook(self, title, author, text, id):
+        sql = 'update BOOK set NAME=?,AUTHOR=?,TEXT=? where ID=?'
+        self.runSQL(sql, (title, author, text, id,))
+
+    def deleteMyBook(self, userid, bookid):
+        sql = 'delete from USERBOOK where USERID=? AND BOOKID=?'
+        self.runSQL(sql, (userid,bookid,))
+
+    def deleteBook(self, id):
+        sql = 'delete from BOOK where ID=?'
+        self.runSQL(sql, (id,))
+
+    def selectAllBook(self):
+        sql = 'select * from BOOK'
+        return self.runSQL(sql)
+
+    def selectBook(self, id):
+        sql = 'select * from BOOK where ID=?'
+        cursor = self.runSQL(sql, (id,))
+        return cursor.fetchone()
+
+    def selectMyBook(self, id):
+        sql = 'select * from USERBOOK where USERID=?'
         return self.runSQL(sql, (id,))
 
 # db = IyrcDB()
