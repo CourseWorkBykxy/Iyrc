@@ -233,7 +233,7 @@ class IyrcUI():
         Label(self.frame, text='用户名:').grid(row=0, column=0, padx=5)
         Label(self.frame, text='密码:').grid(row=1, column=0, padx=5)
         self.username = Entry(self.frame, textvariable=StringVar())
-        self.password = Entry(self.frame, textvariable=StringVar())
+        self.password = Entry(self.frame, textvariable=StringVar(),show='*')
         self.username.grid(row=0, column=1, padx=5)
         self.password.grid(row=1, column=1, padx=5)
         Label(self.f1, text='消息:').grid(row=0, column=0, padx=5)
@@ -247,8 +247,8 @@ class IyrcUI():
         cleanFrame(self.f1)
         self.size1()
         Label(self.frame, text='用户名:').grid(row=0, column=0, padx=5)
-        Label(self.frame, text='密码:').grid(row=1, column=0, padx=5)
-        Label(self.frame, text='确认密码:').grid(row=2, column=0, padx=5)
+        Label(self.frame, text='密码:').grid(row=1, column=0, padx=5,show='*')
+        Label(self.frame, text='确认密码:').grid(row=2, column=0, padx=5,show='*')
         Label(self.frame, text='邮箱:').grid(row=3, column=0, padx=5)
         self.username = Entry(self.frame, textvariable=StringVar())
         self.password = Entry(self.frame, textvariable=StringVar())
@@ -268,5 +268,5 @@ class IyrcUI():
 
 if __name__ == '__main__':
     root = Tk()
-    IyrcUI(root).userMain()
+    IyrcUI(root).login()
     root.mainloop()
